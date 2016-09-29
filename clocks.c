@@ -1,5 +1,5 @@
 /*
- * clocks.c
+ * clocks.c fff
  *
  *  Created on: 30 Haz 2014
  *      Author: BURC - Corentin
