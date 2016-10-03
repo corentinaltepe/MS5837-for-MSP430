@@ -173,6 +173,8 @@ __interrupt void USCI_VECTOR_LP_fct(void)
 	LPM3_EXIT;
 }
 
+// Only configure the I2C port on the MSP430
+// No communication with the sensor is done here
 void initMS5837(unsigned short prescaler)
 {
 	// Reset I2C

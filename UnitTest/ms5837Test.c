@@ -22,15 +22,18 @@ extern double tempLP, pressLP, pressIP;*/
 char MS5837TestMain()
 {
 	// Start the clocks
-	initClockSystem(4000000);
-	__delay_cycles(1000000);	// 1 second?
+	initClockSystem(4000000);	// 4 MHz
+	__delay_cycles(1000000);
 	startTimer();
 
+	__enable_interrupt();
+
+	// Enable the regulator to power the pressure sensor
 	P1OUT &= ~BIT4;
 	P1DIR |= BIT4;
-	__delay_cycles(1000000);	// 1 second?
+	__delay_cycles(2000000);
 	P1OUT |= BIT4;
-	__delay_cycles(1000000);	// 1 second?
+	__delay_cycles(1000000);
 
 	// Initialize I2C
 	initMS5837(0x0020);
@@ -38,14 +41,14 @@ char MS5837TestMain()
 	if(MS5837TestInitAndCalibration() == 0)
 		return 0;
 
-	if(MS5837TestLPIPAcquisition() == 0)
+	/*if(MS5837TestLPIPAcquisition() == 0)
 		return 0;
 
 	if(MS5837PerfTest() == 0)
 		return 0;
 
 	if(MS5837I2CTest() == 0)
-		return 0;
+		return 0;*/
 
 	return 1;
 }
@@ -53,10 +56,10 @@ char MS5837TestMain()
 char MS5837TestInitAndCalibration()
 {
 	// Test the Start routine and measure time
-	if(startMS5837() != 0)
-		return 0;	// Error (timeout or other)
+	if(startMS5837() > 0)
+		return (char)0;	// Error (timeout or other)
 
-	return 1;
+	return (char)1;
 }
 
 char MS5837TestLPIPAcquisition()
