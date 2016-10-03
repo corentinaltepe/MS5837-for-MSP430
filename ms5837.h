@@ -114,6 +114,7 @@ long getLatestTemperatureMeasure();
 long getCalibrationLP();
 long getCalibrationTemperature();
 char getPressureSensorPendingAction();
+char getPSensorFlag();
 
 unsigned short getTimeSeconds();
 void callTimeout(char d1d2cmd);

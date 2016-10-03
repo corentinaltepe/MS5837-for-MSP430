@@ -11,7 +11,7 @@
 char MS5837TestMain();
 
 char MS5837TestInitAndCalibration();
-char MS5837TestLPIPAcquisition();
+char MS5837TestAcquisition();
 char MS5837PerfTest();
 char MS5837I2CTest();
 
