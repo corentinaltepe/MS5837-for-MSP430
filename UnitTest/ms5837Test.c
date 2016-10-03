@@ -41,10 +41,10 @@ char MS5837TestMain()
 	if(MS5837TestInitAndCalibration() == 0)
 		return 0;
 
-	/*if(MS5837TestLPIPAcquisition() == 0)
+	if(MS5837TestAcquisition() == 0)
 		return 0;
 
-	if(MS5837PerfTest() == 0)
+	/*if(MS5837PerfTest() == 0)
 		return 0;
 
 	if(MS5837I2CTest() == 0)
@@ -68,42 +68,32 @@ char MS5837TestInitAndCalibration()
 
 	// Measured values
 	printf("Pressure: %ld\n", averages[0]);
-	printf("Temperature: %ld\n", averages[1]);
+	printf("Temperature: %ld\n\n", averages[1]);
 
 	return 1;
 }
 
-char MS5837TestLPIPAcquisition()
+char MS5837TestAcquisition()
 {
 	double time = 0.0;
-	unsigned short i = 10;
+	unsigned short i = 10;	// Number of loops
 
 	do
 	{
-
-		/*// Wait for both sensors to be ready - Timeout of 5 seconds
-		while(!isMS5837Available(SENSOR_IP) || pSensorFlag[SENSOR_IP]!=PFLAG_IDLE)
+		// Wait for sensor to be ready - Timeout of 5 seconds
+		while(!isMS5837Available() || getPSensorFlag()!=PFLAG_IDLE)
 		{
 			if(getCurrentTime() - time > 5.0)
 				return 0;
 			routinePressureSensor();
 		}
-
-		while(!isMS5837Available(SENSOR_LP) || pSensorFlag[SENSOR_LP]!=PFLAG_IDLE)
-		{
-			if(getCurrentTime() - time > 5.0)
-				return 0;
-			routinePressureSensor();
-		}
-
 
 		time = getCurrentTime();
 
-		// Order both sensors at the same time (almost)
-		startMS5837Acquisition(SENSOR_IP);
-		startMS5837Acquisition(SENSOR_LP);
+		// Order sensor acquisition with maximum resolution (18 ms)
+		startMS5837Acquisition(CMD_D1_8192, CMD_D2_8192);
 
-		while(!isNewDataAvailable(SENSOR_LP) || !isNewDataAvailable(SENSOR_IP))
+		while(!isNewDataAvailable())
 		{
 			routinePressureSensor();	// Need to run the routine to acquire values
 
@@ -113,14 +103,16 @@ char MS5837TestLPIPAcquisition()
 		}
 
 		// Read the values
-		long pressLP = getLatestPressureMeasure(SENSOR_LP);
-		long pressIP = getLatestPressureMeasure(SENSOR_IP);
-		long tempLP = getLatestTemperatureMeasure(SENSOR_LP);
+		long pressLP = getLatestPressureMeasure();
+		long tempLP = getLatestTemperatureMeasure();
 
-		if(pressLP > 11000 || pressLP < 9500 || pressIP > 11000 || pressIP < 9500
-				|| tempLP < 1000 || tempLP > 3000)
+		// Measured values
+		printf("Pressure: %ld\n", pressLP);
+		printf("Temperature: %ld\n", tempLP);
+
+		if(pressLP > 11000 || pressLP < 9500 || tempLP < 1000 || tempLP > 3000)
 			return 0;	// Wrong values
-*/
+
 		i--;
 
 	}while(i > 0);

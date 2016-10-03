@@ -78,7 +78,7 @@ unsigned short getTimeSeconds()
 {
 	// TODO
 	// User to define how the hardware counts time
-	return 0;
+	return getCurrentSeconds();	// Return value from clocks.h
 }
 
 // TODO
@@ -675,7 +675,7 @@ long getLatestTemperatureMeasure()
 	// Clear the flags
 	pFlagDataAvailable &= ~BIT0;
 
-	// Units: �C
+	// Units: C
 	return TEMP;
 }
 
@@ -690,4 +690,9 @@ char getPressureSensorPendingAction()
 	if(pSensorFlag == PFLAG_READADC_D1_E) return 1;
 
 	return 0;
+}
+
+char getPSensorFlag()
+{
+	return pSensorFlag;
 }
