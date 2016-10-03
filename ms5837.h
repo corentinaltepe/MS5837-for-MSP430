@@ -95,7 +95,7 @@ void pSensorFailureProcedure();
 
 void reset();
 char readCalibrationFactors();
-char readCalibrationLP(long * output, unsigned char nbSamples);	// Returns {pressure(bar), temperature(°C)}
+char readCalibrationPressureAndTemperature(long * output, unsigned char nbSamples);	// Returns {pressure(bar), temperature(°C)}
 char convertCalibrationFactors(unsigned short * prom);
 
 char calculateTempPress(char calculateTemperature, char secondOrder);

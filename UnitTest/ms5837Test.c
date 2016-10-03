@@ -57,9 +57,20 @@ char MS5837TestInitAndCalibration()
 {
 	// Test the Start routine and measure time
 	if(startMS5837() > 0)
-		return (char)0;	// Error (timeout or other)
+		return 0;	// Error (timeout or other)
 
-	return (char)1;
+	// Read 10 times the temperature and pressure and then return
+	// the average of the measures
+	// Long call, only use this function occasionally
+	long averages[2];
+	if(readCalibrationPressureAndTemperature(averages, 10) != RET_SUCCESS)
+		return 0;
+
+	// Measured values
+	printf("Pressure: %ld\n", averages[0]);
+	printf("Temperature: %ld\n", averages[1]);
+
+	return 1;
 }
 
 char MS5837TestLPIPAcquisition()
