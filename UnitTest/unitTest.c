@@ -59,10 +59,10 @@ void unitTestMain()
 	else
 		printf("BatteryMonitor Unit Test FAILED\n\n");*/
 
-	if(modeManagerTestMain())
+	/*if(modeManagerTestMain())
 		printf("ModeManager Unit Test PASSED\n\n");
 	else
-		printf("ModeManager Unit Test FAILED\n\n");
+		printf("ModeManager Unit Test FAILED\n\n");*/
 
 	/*if(piezoButtonTestMain())
 		printf("PiezoButtonTest Test PASSED\n\n");

@@ -67,7 +67,7 @@ char MS5837TestLPIPAcquisition()
 	do
 	{
 
-		// Wait for both sensors to be ready - Timeout of 5 seconds
+		/*// Wait for both sensors to be ready - Timeout of 5 seconds
 		while(!isMS5837Available(SENSOR_IP) || pSensorFlag[SENSOR_IP]!=PFLAG_IDLE)
 		{
 			if(getCurrentTime() - time > 5.0)
@@ -106,7 +106,7 @@ char MS5837TestLPIPAcquisition()
 		if(pressLP > 11000 || pressLP < 9500 || pressIP > 11000 || pressIP < 9500
 				|| tempLP < 1000 || tempLP > 3000)
 			return 0;	// Wrong values
-
+*/
 		i--;
 
 	}while(i > 0);
@@ -120,7 +120,7 @@ char MS5837PerfTest()
 	// difference between compensated and uncompensated pressure.
 
 	// Assume Sensor is started and runs properly
-	startMS5837Acquisition(SENSOR_IP);
+	/*startMS5837Acquisition(SENSOR_IP);
 	while(!isNewDataAvailable(SENSOR_IP)) routinePressureSensor();
 
 	// D1, and D2 are acquired for SENSOR_IP
@@ -180,7 +180,7 @@ char MS5837PerfTest()
 	}
 	secondOrderTime = getCurrentTime() - startTime;
 	printf("SENSOR_LP acquisition: %f s\n", secondOrderTime);
-
+*/
 	return 1;
 }
 
