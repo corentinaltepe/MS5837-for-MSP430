@@ -16,8 +16,8 @@
 #define MS5837_POUT				P3OUT
 #define MS5837_PDIR				P3DIR
 #define MS5837_PSEL				P3SEL
-#define MS5837_SDABIT			BIT1
-#define MS5837_SCLBIT			BIT2
+#define MS5837_SDABIT			BIT0
+#define MS5837_SCLBIT			BIT1
 #define MS5837_INT_VECT			USCI_B0_VECTOR
 #define MS5837_UCBCSA			UCB0I2CSA
 #define MS5837_STAT				UCB0STAT
@@ -95,7 +95,7 @@ void pSensorFailureProcedure();
 
 void reset();
 char readCalibrationFactors();
-char readCalibrationLP(long * output, unsigned char nbSamples);	// Returns {pressure(bar), temperature(°C)}
+char readCalibrationPressureAndTemperature(long * output, unsigned char nbSamples);	// Returns {pressure(bar), temperature(°C)}
 char convertCalibrationFactors(unsigned short * prom);
 
 char calculateTempPress(char calculateTemperature, char secondOrder);
@@ -114,6 +114,7 @@ long getLatestTemperatureMeasure();
 long getCalibrationLP();
 long getCalibrationTemperature();
 char getPressureSensorPendingAction();
+char getPSensorFlag();
 
 unsigned short getTimeSeconds();
 void callTimeout(char d1d2cmd);

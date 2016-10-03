@@ -78,11 +78,11 @@ unsigned short getTimeSeconds()
 {
 	// TODO
 	// User to define how the hardware counts time
-	return 0;
+	return getCurrentSeconds();	// Return value from clocks.h
 }
 
 // TODO
-// This function need to call for a timeout in the hardware, corresponding
+// This function needs to call for a timeout in the hardware, corresponding
 // to the conversion time of the sensor.
 void callTimeout(char d1d2cmd)
 {
@@ -90,21 +90,27 @@ void callTimeout(char d1d2cmd)
 	{
 	case 0:
 		// Call for a 0.6 ms timeout
+		startTimeout(T0MS60, conversionTimeoutEndedCallback);
 		break;
 	case 2:
 		// Call for a 1.17 ms timeout
+		startTimeout(T1MS17, conversionTimeoutEndedCallback);
 		break;
 	case 4:
 		// Call for a 2.28 ms timeout
+		startTimeout(T2MS28, conversionTimeoutEndedCallback);
 		break;
 	case 6:
 		// Call for a 4.54 ms timeout
+		startTimeout(T4MS54, conversionTimeoutEndedCallback);
 		break;
 	case 8:
 		// Call for a 9.04 ms timeout
+		startTimeout(T9MS04, conversionTimeoutEndedCallback);
 		break;
 	case 0x0A:
 		// Call for a 18.08 ms timeout
+		startTimeout(T18MS08, conversionTimeoutEndedCallback);
 		break;
 	}
 }
@@ -173,6 +179,8 @@ __interrupt void USCI_VECTOR_LP_fct(void)
 	LPM3_EXIT;
 }
 
+// Only configure the I2C port on the MSP430
+// No communication with the sensor is done here
 void initMS5837(unsigned short prescaler)
 {
 	// Reset I2C
@@ -486,7 +494,7 @@ char convertCalibrationFactors(unsigned short * buff)
 // in the format LONG as measured by the pressure sensor, for a faster
 // execution (no format conversion or casting to double, float, unsigned, etc.)
 // There is a risk of overflow of calibLP if the pressure is high and too many samples
-char readCalibrationLP(long * output, unsigned char nbSamples)
+char readCalibrationPressureAndTemperature(long * output, unsigned char nbSamples)
 {
 	unsigned char i;
 	long calibLP = 0, temperature = 0;
@@ -667,7 +675,7 @@ long getLatestTemperatureMeasure()
 	// Clear the flags
 	pFlagDataAvailable &= ~BIT0;
 
-	// Units: �C
+	// Units: C
 	return TEMP;
 }
 
@@ -682,4 +690,9 @@ char getPressureSensorPendingAction()
 	if(pSensorFlag == PFLAG_READADC_D1_E) return 1;
 
 	return 0;
+}
+
+char getPSensorFlag()
+{
+	return pSensorFlag;
 }
