@@ -9,9 +9,9 @@
 #define UNITTEST_M5837TEST_H_
 
 char MS5837TestMain();
-
 char MS5837TestInitAndCalibration();
 char MS5837TestAcquisition();
+char MS5837TestSdtDev();
 char MS5837PerfTest();
 char MS5837I2CTest();
 

@@ -1,0 +1,8 @@
+%% Time plots (approximative)
+close all
+
+figure
+yyaxis left
+plot(1:length(pressure0256), pressure0256)
+yyaxis right
+plot(temp0256)

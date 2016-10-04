@@ -228,7 +228,7 @@ char startMS5837()
 	while(!isMS5837Available())	if(getTimeSeconds() - startTime > 2) return RET_TIMEOUT;
 	reset();	// Send Reset cmd
 
-	__delay_cycles(800000);	// 100 ms
+	__delay_cycles(400000);	// 100 ms
 
 	// Get the calibration values
 	while(!isMS5837Available()) if(getTimeSeconds() - startTime > 2) return RET_TIMEOUT;

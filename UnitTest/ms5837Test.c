@@ -36,13 +36,16 @@ char MS5837TestMain()
 	__delay_cycles(1000000);
 
 	// Initialize I2C
-	initMS5837(0x0020);
+	initMS5837(0x0050);
 
 	if(MS5837TestInitAndCalibration() == 0)
 		return 0;
 
 	if(MS5837TestAcquisition() == 0)
 		return 0;
+
+	if(MS5837TestSdtDev() == 0)
+			return 0;
 
 	/*if(MS5837PerfTest() == 0)
 		return 0;
@@ -119,6 +122,45 @@ char MS5837TestAcquisition()
 
 	return 1;
 }
+char MS5837TestSdtDev()
+{
+		unsigned short i = 1000;	// Number of loops
+		printf("Start of Data\n");
+		do
+		{
+			// Wait for sensor to be ready - Timeout of 5 seconds
+			while(!isMS5837Available() || getPSensorFlag()!=PFLAG_IDLE)
+			{
+				routinePressureSensor();
+			}
+			getLatestPressureMeasure();
+
+			// Order sensor acquisition with maximum resolution (18 ms)
+			startMS5837Acquisition(CMD_D1_8192, CMD_D2_8192);
+
+			while(!isNewDataAvailable())
+			{
+				routinePressureSensor();	// Need to run the routine to acquire values
+			}
+
+			// Read the values
+			long pressLP = getLatestPressureMeasure();
+			long tempLP = getLatestTemperatureMeasure();
+
+			// Measured values
+			printf("%ld; %ld\n", pressLP, tempLP);
+
+			if(pressLP > 11000 || pressLP < 9500 || tempLP < 1000 || tempLP > 3000)
+				return 0;	// Wrong values
+
+			i--;
+
+		}while(i > 0);
+
+		printf("End of Data\n");
+		return 1;
+}
+
 
 char MS5837PerfTest()
 {
