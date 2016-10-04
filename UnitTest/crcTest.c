@@ -9,7 +9,7 @@
 
 #include "crcTest.h"
 
-#include "crc.h"
+#include "../crc.h"
 
 char crcTestMain()
 {
