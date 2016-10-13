@@ -26,17 +26,22 @@ char MS5837TestMain()
 	__delay_cycles(1000000);
 	startTimer();
 
+	// Initialize I2C
+	initMS5837(0x100);
+	//P2DIR |= BIT6;
+	//P2SEL |= BIT6;
+	//P4DIR |= BIT7;
+	//P4SEL |= BIT7;
+
 	__enable_interrupt();
 
 	// Enable the regulator to power the pressure sensor
-	P1OUT &= ~BIT4;
+/*	P1OUT &= ~BIT4;
 	P1DIR |= BIT4;
 	__delay_cycles(2000000);
 	P1OUT |= BIT4;
 	__delay_cycles(1000000);
-
-	// Initialize I2C
-	initMS5837(0x0050);
+*/
 
 	if(MS5837TestInitAndCalibration() == 0)
 		return 0;
@@ -44,10 +49,10 @@ char MS5837TestMain()
 	if(MS5837TestAcquisition() == 0)
 		return 0;
 
-	if(MS5837TestSdtDev() == 0)
-			return 0;
+	/*if(MS5837TestSdtDev() == 0)
+		return 0;
 
-	/*if(MS5837PerfTest() == 0)
+	if(MS5837PerfTest() == 0)
 		return 0;
 
 	if(MS5837I2CTest() == 0)
