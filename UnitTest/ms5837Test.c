@@ -27,7 +27,7 @@ char MS5837TestMain()
 	startTimer();
 
 	// Initialize I2C
-	initMS5837(0x1000);
+	initMS5837(0x100);
 	//P2DIR |= BIT6;
 	//P2SEL |= BIT6;
 	//P4DIR |= BIT7;
@@ -49,10 +49,10 @@ char MS5837TestMain()
 	if(MS5837TestAcquisition() == 0)
 		return 0;
 
-	if(MS5837TestSdtDev() == 0)
-			return 0;
+	/*if(MS5837TestSdtDev() == 0)
+		return 0;
 
-	/*if(MS5837PerfTest() == 0)
+	if(MS5837PerfTest() == 0)
 		return 0;
 
 	if(MS5837I2CTest() == 0)
