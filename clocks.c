@@ -55,7 +55,7 @@ void initClockSystem(unsigned long freq)
 	PMM_setVCore(PMM_CORE_LEVEL_2);
 
 	// Select XT1 crystal
-	P5SEL |= BIT4 | BIT5;
+	P7SEL |= BIT0 | BIT1;
 
 	/* Configures the system clocks:
 	 * MCLK = SMCLK = DCO/FLL = 8000000 (expected to be expressed in Hz)
